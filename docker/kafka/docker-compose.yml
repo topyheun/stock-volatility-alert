@@ -1,0 +1,137 @@
+volumes:
+  kafka-broker-01-data:
+  kafka-broker-02-data:
+  kafka-broker-03-data:
+  kafka-controller-01-data:
+  kafka-controller-02-data:
+  kafka-controller-03-data:
+
+services:
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - '8080:8080'
+    depends_on:
+      - kafka-broker-01
+      - kafka-broker-02
+      - kafka-broker-03
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=Local-Kraft-Cluster
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-broker-01:9092,kafka-broker-02:9093,kafka-broker-03:9094
+      - DYNAMIC_CONFIG_ENABLED=true
+      - KAFKA_CLUSTERS_0_AUDIT_TOPICAUDITENABLED=true
+      - KAFKA_CLUSTERS_0_AUDIT_CONSOLEAUDITENABLED=true
+
+  kafka-broker-01:
+    image: confluentinc/cp-kafka:7.4.3
+    ports:
+      - "9092:9092"
+      - "6001:6001"
+    user: root
+    environment:
+      CLUSTER_ID: ckjPoprWQzOf0-FuNkGfFQ
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENERS: BROKER://kafka-broker-01:9092,EXTERNAL://0.0.0.0:6001
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-01:9092,EXTERNAL://localhost:6001
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 4@kafka-controller-01:5001,5@kafka-controller-02:5002,6@kafka-controller-03:5003
+      KAFKA_LOG_DIRS: /tmp/kafka-broker-logs
+    volumes:
+      - kafka-broker-01-data:/tmp/kafka-broker-logs
+
+  kafka-broker-02:
+    image: confluentinc/cp-kafka:7.4.3
+    ports:
+      - "9093:9093"
+      - "6002:6002"
+    user: root
+    environment:
+      CLUSTER_ID: ckjPoprWQzOf0-FuNkGfFQ
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_NODE_ID: 2
+      KAFKA_LISTENERS: BROKER://kafka-broker-02:9093,EXTERNAL://0.0.0.0:6002
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-02:9093,EXTERNAL://localhost:6002
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 4@kafka-controller-01:5001,5@kafka-controller-02:5002,6@kafka-controller-03:5003
+      KAFKA_LOG_DIRS: /tmp/kafka-broker-logs
+    volumes:
+      - kafka-broker-02-data:/tmp/kafka-broker-logs
+
+  kafka-broker-03:
+    image: confluentinc/cp-kafka:7.4.3
+    ports:
+      - "9094:9094"
+      - "6003:6003"
+    user: root
+    environment:
+      CLUSTER_ID: ckjPoprWQzOf0-FuNkGfFQ
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_NODE_ID: 3
+      KAFKA_LISTENERS: BROKER://kafka-broker-03:9094,EXTERNAL://0.0.0.0:6003
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-03:9094,EXTERNAL://localhost:6003
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 4@kafka-controller-01:5001,5@kafka-controller-02:5002,6@kafka-controller-03:5003
+      KAFKA_LOG_DIRS: /tmp/kafka-broker-logs
+    volumes:
+      - kafka-broker-03-data:/tmp/kafka-broker-logs
+
+  kafka-controller-01:
+    image: confluentinc/cp-kafka:7.4.3
+    ports:
+      - "5001:5001"
+    user: root
+    environment:
+      CLUSTER_ID: ckjPoprWQzOf0-FuNkGfFQ
+      KAFKA_PROCESS_ROLES: controller
+      KAFKA_NODE_ID: 4
+      KAFKA_LISTENERS: CONTROLLER://kafka-controller-01:5001
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 4@kafka-controller-01:5001,5@kafka-controller-02:5002,6@kafka-controller-03:5003
+      KAFKA_LOG_DIRS: /tmp/kafka-controller-logs
+    volumes:
+      - kafka-controller-01-data:/tmp/kafka-controller-logs
+
+  kafka-controller-02:
+    image: confluentinc/cp-kafka:7.4.3
+    ports:
+      - "5002:5002"
+    user: root
+    environment:
+      CLUSTER_ID: ckjPoprWQzOf0-FuNkGfFQ
+      KAFKA_PROCESS_ROLES: controller
+      KAFKA_NODE_ID: 5
+      KAFKA_LISTENERS: CONTROLLER://kafka-controller-02:5002
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 4@kafka-controller-01:5001,5@kafka-controller-02:5002,6@kafka-controller-03:5003
+      KAFKA_LOG_DIRS: /tmp/kafka-controller-logs
+    volumes:
+      - kafka-controller-02-data:/tmp/kafka-controller-logs
+
+  kafka-controller-03:
+    image: confluentinc/cp-kafka:7.4.3
+    ports:
+      - "5003:5003"
+    user: root
+    environment:
+      CLUSTER_ID: ckjPoprWQzOf0-FuNkGfFQ
+      KAFKA_PROCESS_ROLES: controller
+      KAFKA_NODE_ID: 6
+      KAFKA_LISTENERS: CONTROLLER://kafka-controller-03:5003
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 4@kafka-controller-01:5001,5@kafka-controller-02:5002,6@kafka-controller-03:5003
+      KAFKA_LOG_DIRS: /tmp/kafka-controller-logs
+    volumes:
+      - kafka-controller-03-data:/tmp/kafka-controller-logs
