@@ -21,6 +21,7 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:6001, localhost:6002, localhost:6003");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(JsonSerializer.TYPE_MAPPINGS, "stock:collector.domain.stock.dto.StockData");
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
