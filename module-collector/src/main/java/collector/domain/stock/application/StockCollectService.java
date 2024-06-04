@@ -20,7 +20,7 @@ public class StockCollectService {
         getStockData()
             .flatMapMany(Flux::fromArray)
             .next()
-            .subscribe(stockPublishService::publish);
+            .subscribe(stockPublishService::stockDataPublish);
     }
 
     private Mono<StockData[]> getStockData() {
