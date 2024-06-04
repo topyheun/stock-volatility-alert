@@ -12,6 +12,6 @@ public class StockPublishService {
     private final KafkaTemplate<String, StockData> kafkaTemplate;
 
     public void stockDataPublish(StockData stockData) {
-        kafkaTemplate.send("stock", stockData);
+        kafkaTemplate.send("stock", stockData.ticker(), stockData);
     }
 }
