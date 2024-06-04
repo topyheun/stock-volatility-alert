@@ -1,6 +1,6 @@
 package collector.domain.stock.application;
 
-import collector.domain.stock.dto.StockRequest;
+import collector.domain.stock.dto.StockData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StockPublishService {
 
-    private final KafkaTemplate<String, StockRequest> kafkaTemplate;
+    private final KafkaTemplate<String, StockData> kafkaTemplate;
 
-    public void publish(StockRequest stockRequest) {
-        kafkaTemplate.send("stock", stockRequest);
+    public void stockDataPublish(StockData stockData) {
+        kafkaTemplate.send("stock", stockData);
     }
 }

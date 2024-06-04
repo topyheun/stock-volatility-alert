@@ -2,11 +2,12 @@ package collector.domain.stock.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record StockRequest(
-    String market,
+public record StockData(
+    @JsonProperty("market")
+    String ticker,
 
     @JsonProperty("trade_price")
-    int tradePrice
+    int price
 ) {
 
 }

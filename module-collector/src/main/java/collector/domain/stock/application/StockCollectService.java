@@ -23,13 +23,13 @@ public class StockCollectService {
             .subscribe(stockPublishService::publish);
     }
 
-    private Mono<StockRequest[]> getStockData() {
+    private Mono<StockData[]> getStockData() {
         return webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .path("/ticker")
                 .queryParam("markets", "KRW-BTC")
                 .build())
             .retrieve()
-            .bodyToMono(StockRequest[].class);
+            .bodyToMono(StockData[].class);
     }
 }

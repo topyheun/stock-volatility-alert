@@ -1,6 +1,6 @@
 package collector.global.config;
 
-import collector.domain.stock.dto.StockRequest;
+import collector.domain.stock.dto.StockData;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -16,7 +16,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 public class KafkaConfig {
 
     @Bean
-    public ProducerFactory<String, StockRequest> producerFactory() {
+    public ProducerFactory<String, StockData> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:6001, localhost:6002, localhost:6003");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -25,7 +25,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, StockRequest> kafkaTemplate() {
+    public KafkaTemplate<String, StockData> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
