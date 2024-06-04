@@ -1,1 +1,12 @@
-spring.application.name=module-analyzer
+server:
+  port: 8002
+
+spring:
+  application:
+    name: module-analyzer
+  kafka:
+    bootstrap-servers: localhost:6001, localhost:6002, localhost:6003
+  data:
+    redis:
+      host: localhost
+      port: 6379
