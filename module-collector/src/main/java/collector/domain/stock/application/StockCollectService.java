@@ -1,6 +1,6 @@
 package collector.domain.stock.application;
 
-import collector.domain.stock.dto.StockRequest;
+import collector.domain.stock.dto.StockData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
