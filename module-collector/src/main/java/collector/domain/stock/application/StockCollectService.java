@@ -15,7 +15,7 @@ public class StockCollectService {
     private final WebClient webClient;
     private final StockPublishService stockPublishService;
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void collectStock() {
         getStockData()
             .flatMapMany(Flux::fromArray)
