@@ -1,6 +1,9 @@
 package collector.domain.stock.application;
 
 import collector.domain.stock.dto.StockData;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,17 +20,20 @@ public class StockCollectService {
 
     @Scheduled(cron = "0 * * * * *")
     public void collectStock() {
-        getStockData()
+        List<Stock> stocks = Arrays.asList(Stock.values());
+
+        getStockData(stocks)
             .flatMapMany(Flux::fromArray)
-            .next()
             .subscribe(stockPublishService::stockDataPublish);
     }
 
-    private Mono<StockData[]> getStockData() {
+    private Mono<StockData[]> getStockData(List<Stock> stocks) {
         return webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .path("/ticker")
-                .queryParam("markets", "KRW-BTC")
+                .queryParam("markets", stocks.stream()
+                    .map(Stock::getTicker)
+                    .collect(Collectors.joining(",")))
                 .build())
             .retrieve()
             .bodyToMono(StockData[].class);
