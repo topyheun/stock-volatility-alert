@@ -11,7 +11,7 @@ Collector Module은 가상화폐 거래소 API를 활용하여 사용자가 원�
 
 - Java, SpringBoot, Redis, Kafka
 
-<img width="950" alt="image" src="https://github.com/topyheun/stock-volatility-alert/assets/41532299/db143b62-d012-4501-b759-745183e267bb">
+<img width="900" alt="image" src="https://github.com/topyheun/stock-volatility-alert/assets/41532299/db143b62-d012-4501-b759-745183e267bb">
 
 <br>
 
@@ -64,12 +64,13 @@ public enum Stock {
 }
 ```
 
-아래 이미지는 위 Enum 클래스에서 정의한 4개의 코인 정보를 수집하고, 변동성 알림 기능에 대한 테스트 결과입니다.
+**아래 이미지는 위 Enum 클래스에서 정의한 4개의 코인 정보를 수집하고, 변동성 알림 기능에 대한 테스트 결과입니다.**
 
-<img width="450" alt="image" src="https://github.com/topyheun/stock-volatility-alert/assets/41532299/0ad5a2e9-99f3-47e2-958e-7e561e148784">ㅤㅤ<img width="450" alt="image" src="https://github.com/topyheun/stock-volatility-alert/assets/41532299/4d1bb0a2-16bc-4c9e-99b7-0ceb121e3302">
+<img width="600" alt="image" src="https://github.com/topyheun/stock-volatility-alert/assets/41532299/0ad5a2e9-99f3-47e2-958e-7e561e148784"><br>[ Slack에 쌓이는 변동성 알림 메시지 ]
+<br><br>
+<img width="600" alt="image" src="https://github.com/topyheun/stock-volatility-alert/assets/41532299/4d1bb0a2-16bc-4c9e-99b7-0ceb121e3302"><br>[ Kafka 'Stock' 토픽 파티션에 쌓이는 코인 데이터 ]
 
-- 좌 (Slack에 쌓이는 변동성 알림 메시지)
-- 우 (Kafka 'Stock' 토픽 파티션에 쌓이는 코인 데이터)
+<br>
 
 ## 활용 Tip
 
@@ -84,6 +85,8 @@ public enum Stock {
 
 - 수집 간격 : 1시간
 - 변동 감지 : 1%
+
+<br>
 
 ---
 ---
