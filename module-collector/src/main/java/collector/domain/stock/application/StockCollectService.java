@@ -18,22 +18,28 @@ public class StockCollectService {
     private final WebClient webClient;
     private final StockPublishService stockPublishService;
 
+    private static final int CHUNK_SIZE = 100;
+
     @Scheduled(cron = "0 * * * * *")
     public void collectStock() {
         List<Stock> stocks = Arrays.asList(Stock.values());
 
-        getStockData(stocks)
-            .flatMapMany(Flux::fromArray)
+        Flux.fromIterable(stocks)
+            .buffer(CHUNK_SIZE)
+            .flatMap(this::getStockData)
+            .flatMap(Flux::fromArray)
             .subscribe(stockPublishService::stockDataPublish);
     }
 
     private Mono<StockData[]> getStockData(List<Stock> stocks) {
+        String marketParams = stocks.stream()
+            .map(Stock::getTicker)
+            .collect(Collectors.joining(","));
+
         return webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .path("/ticker")
-                .queryParam("markets", stocks.stream()
-                    .map(Stock::getTicker)
-                    .collect(Collectors.joining(",")))
+                .queryParam("markets", marketParams)
                 .build())
             .retrieve()
             .bodyToMono(StockData[].class);
