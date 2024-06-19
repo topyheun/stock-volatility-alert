@@ -7,7 +7,7 @@ public record StockData(
     String ticker,
 
     @JsonProperty("trade_price")
-    int price
+    double price
 ) {
 
 }
