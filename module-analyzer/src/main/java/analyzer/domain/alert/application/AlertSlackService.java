@@ -1,7 +1,5 @@
 package analyzer.domain.alert.application;
 
-import static analyzer.global.common.Const.SLACK_WEBHOOK_URL_VOLATILITY_ALERT;
-
 import analyzer.domain.alert.dto.AlertData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -14,9 +12,9 @@ public class AlertSlackService {
 
     RestClient restClient = RestClient.create();
 
-    public void sendVolatilityAlert(String ticker, double changePercentage) {
+    public void sendVolatilityAlert(String ticker, double changePercentage, String slackWebhookUrl) {
         restClient.post()
-            .uri(SLACK_WEBHOOK_URL_VOLATILITY_ALERT)
+            .uri(slackWebhookUrl)
             .contentType(MediaType.APPLICATION_JSON)
             .body(AlertData.of(ticker, changePercentage))
             .retrieve();

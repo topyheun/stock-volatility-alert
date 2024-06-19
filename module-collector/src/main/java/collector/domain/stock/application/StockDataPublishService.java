@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class StockPublishService {
+public class StockDataPublishService {
 
     private final KafkaTemplate<String, StockData> kafkaTemplate;
 
-    public void stockDataPublish(StockData stockData) {
-        kafkaTemplate.send("stock", stockData.ticker(), stockData);
+    public void sendStockDataToKafka(String topic, StockData stockData) {
+        kafkaTemplate.send(topic, stockData.ticker(), stockData);
     }
 }
