@@ -74,5 +74,4 @@ sequenceDiagram
 ---
 ---
 
-**↓↓ 가상화폐 분석 및 트레이딩 플랫폼**<br>
-TradingView: [Topy](https://kr.tradingview.com/u/Topy_/)
+**가상화폐 거래 관련 인사이트를 공유하는 TradingView 프로필 :  [Topy](https://kr.tradingview.com/u/Topy_/)**
