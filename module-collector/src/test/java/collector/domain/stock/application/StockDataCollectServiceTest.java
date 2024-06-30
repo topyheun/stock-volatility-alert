@@ -59,7 +59,6 @@ class StockDataCollectServiceTest {
             new StockData("KRW-ETH", 4500000.0)
         };
 
-        // Mock WebClient calls
         when(webClient.get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri("/market/all")).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
