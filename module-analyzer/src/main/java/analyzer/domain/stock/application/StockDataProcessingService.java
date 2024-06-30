@@ -24,11 +24,23 @@ public class StockDataProcessingService {
 
     @KafkaListener(topics = SHORT_STOCK_TIMEFRAME_KAFKA_TOPIC, groupId = "short_stock_group")
     public void processShortTimeframeStockData(ConsumerRecord<String, StockData> record) {
-        stockDataAnalyzeService.analyzeAndSendStockData(record.key(), record.value(), SHORT_TIMEFRAME_PRICE_CHANGE_PERCENTAGE_FOR_ALERT, SHORT_TIMEFRAME_REDIS_HASH_KEY, SLACK_WEBHOOK_URL_SHORT_VOLATILITY_ALERT);
+        stockDataAnalyzeService.analyzeAndSendStockData(
+            record.key(),
+            record.value(),
+            SHORT_TIMEFRAME_PRICE_CHANGE_PERCENTAGE_FOR_ALERT,
+            SHORT_TIMEFRAME_REDIS_HASH_KEY,
+            SLACK_WEBHOOK_URL_SHORT_VOLATILITY_ALERT
+        );
     }
 
     @KafkaListener(topics = LONG_STOCK_TIMEFRAME_KAFKA_TOPIC, groupId = "long_stock_group")
     public void processLongTimeframeStockData(ConsumerRecord<String, StockData> record) {
-        stockDataAnalyzeService.analyzeAndSendStockData(record.key(), record.value(), LONG_TIMEFRAME_PRICE_CHANGE_PERCENTAGE_FOR_ALERT, LONG_TIMEFRAME_REDIS_HASH_KEY, SLACK_WEBHOOK_URL_LONG_VOLATILITY_ALERT);
+        stockDataAnalyzeService.analyzeAndSendStockData(
+            record.key(),
+            record.value(),
+            LONG_TIMEFRAME_PRICE_CHANGE_PERCENTAGE_FOR_ALERT,
+            LONG_TIMEFRAME_REDIS_HASH_KEY,
+            SLACK_WEBHOOK_URL_LONG_VOLATILITY_ALERT
+        );
     }
 }
